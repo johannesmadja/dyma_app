@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 
 class AppCard extends StatelessWidget {
   final City city;
+  final VoidCallback onTap;
 
-  const AppCard({super.key, required this.city});
+  const AppCard({super.key, required this.city, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,11 @@ class AppCard extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            Image.asset(city.imageUrl, fit: BoxFit.cover),
+            Ink.image(
+              fit: BoxFit.cover,
+              image: AssetImage(city.imageUrl),
+              child: InkWell(onTap: onTap),
+            ),
             Positioned(
               bottom: 10,
               left: 10,
@@ -32,7 +37,9 @@ class AppCard extends StatelessWidget {
             Positioned(
               top: 10,
               right: 10,
-              child: Icon(Icons.star_border_outlined),
+              child: Icon(
+                city.isFavorite ? Icons.star_border_outlined : Icons.star,
+              ),
             ),
           ],
         ),
