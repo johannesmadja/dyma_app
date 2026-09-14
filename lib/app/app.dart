@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../core/routes/app_routes.dart';
 import '../features/home/home.dart';
 
 class MyApp extends StatelessWidget {
@@ -12,6 +13,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Dyma App',
       theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
+      routes: AppRoutes.routes,
       home: const MyHomePage(title: 'Dyma Trip'),
     );
   }

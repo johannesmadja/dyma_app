@@ -7,21 +7,21 @@ final List<Activity> activities_mock = [
   Activity(
     name: 'Le Louvre',
     city: City(name: 'Paris', imageUrl: AppAssets.paris, isFavorite: false),
-    image: 'assets/images/activities/louvre.jpg',
+    image: 'assets/images/activity/louvre.jpg',
   ),
   Activity(
     name: 'Les buttes Chaumont',
     city: City(name: 'Paris', imageUrl: AppAssets.paris, isFavorite: false),
-    image: 'assets/images/activities/chaumont.jpg',
+    image: 'assets/images/activity/chaumont.jpg',
   ),
   Activity(
     name: 'Notre Dame',
     city: City(name: 'Paris', imageUrl: AppAssets.paris, isFavorite: false),
-    image: 'assets/images/activities/dame.jpg',
+    image: 'assets/images/activity/dame.jpg',
   ),
   Activity(
     name: 'La Défense',
-    city: City(name: 'Paris', imageUrl: AppAssets.paris, isFavorite: false),
-    image: 'assets/images/activities/defense.jpg',
+    city: City(name: 'Lyon', imageUrl: AppAssets.paris, isFavorite: false),
+    image: 'assets/images/activity/defense.jpg',
   ),
 ];

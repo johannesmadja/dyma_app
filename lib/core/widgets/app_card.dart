@@ -1,3 +1,4 @@
+import 'package:dyma_app/core/routes/app_routes.dart';
 import 'package:dyma_app/features/cities/domain/entities/City.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,13 @@ class AppCard extends StatelessWidget {
             Ink.image(
               fit: BoxFit.cover,
               image: AssetImage(city.imageUrl),
-              child: InkWell(onTap: onTap),
+              child: InkWell(
+                onTap: () => Navigator.pushNamed(
+                  context,
+                  AppRoutes.cityDetail,
+                  arguments: city,
+                ),
+              ),
             ),
             Positioned(
               bottom: 10,
@@ -38,7 +45,7 @@ class AppCard extends StatelessWidget {
               top: 10,
               right: 10,
               child: Icon(
-                city.isFavorite ? Icons.star_border_outlined : Icons.star,
+                city.isFavorite ? Icons.star : Icons.star_border_outlined,
               ),
             ),
           ],
