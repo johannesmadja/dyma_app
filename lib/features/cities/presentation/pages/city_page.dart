@@ -26,7 +26,7 @@ class _CityPageState extends State<CityPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(title: Text(activities.first.name)),
       body: Container(
         padding: EdgeInsets.all(10),
         child: Column(
