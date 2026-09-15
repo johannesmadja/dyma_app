@@ -21,6 +21,7 @@ class _CityPageState extends State<CityPage> {
     activities = activities_mock
         .where((ac) => ac.city.name == city.name)
         .toList();
+    print(activities);
   }
 
   @override
@@ -29,8 +30,10 @@ class _CityPageState extends State<CityPage> {
       appBar: AppBar(title: Text(activities.first.name)),
       body: Container(
         padding: EdgeInsets.all(10),
-        child: Column(
-          children: [...activities.map((ac) => ActivityCard(activity: ac))],
+        child: ListView.builder(
+          itemCount: activities.length,
+          itemBuilder: (context, index) =>
+              ActivityCard(activity: activities[index]),
         ),
       ),
     );

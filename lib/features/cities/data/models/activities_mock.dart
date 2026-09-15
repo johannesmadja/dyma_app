@@ -21,7 +21,7 @@ final List<Activity> activities_mock = [
   ),
   Activity(
     name: 'La Défense',
-    city: City(name: 'Lyon', imageUrl: AppAssets.paris, isFavorite: false),
+    city: City(name: 'Paris', imageUrl: AppAssets.paris, isFavorite: false),
     image: 'assets/images/activity/defense.jpg',
   ),
 ];
