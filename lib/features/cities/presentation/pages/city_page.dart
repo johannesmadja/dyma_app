@@ -27,14 +27,37 @@ class _CityPageState extends State<CityPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(activities.first.name)),
-      body: Container(
-        padding: EdgeInsets.all(10),
-        child: ListView.builder(
-          itemCount: activities.length,
-          itemBuilder: (context, index) =>
-              ActivityCard(activity: activities[index]),
-        ),
+      appBar: AppBar(
+        title: Text(activities.isNotEmpty ? activities.first.city.name : ''),
+      ),
+      body: Column(
+        children: [
+          Container(
+            height: 200,
+            padding: EdgeInsets.all(10),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text("Choississez une date"),
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: const Text("Sélectionnez une date"),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: activities.length,
+              itemBuilder: (context, index) =>
+                  ActivityCard(activity: activities[index]),
+            ),
+          ),
+        ],
       ),
     );
   }

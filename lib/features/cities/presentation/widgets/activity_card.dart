@@ -10,7 +10,7 @@ class ActivityCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.symmetric(vertical: 10),
+      margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       child: Image.asset(activity.image, fit: BoxFit.cover),
     );
   }
