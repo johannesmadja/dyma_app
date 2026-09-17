@@ -2,7 +2,10 @@ import 'package:dyma_app/features/cities/data/models/activities_mock.dart';
 import 'package:dyma_app/features/cities/domain/entities/City.dart';
 import 'package:dyma_app/features/cities/domain/entities/activity.dart';
 import 'package:dyma_app/features/cities/presentation/widgets/activity_card.dart';
+import 'package:dyma_app/features/trip/domain/entities/trip.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../core/utils/date_formatter.dart';
 
 class CityPage extends StatefulWidget {
   const CityPage({super.key});
@@ -13,6 +16,7 @@ class CityPage extends StatefulWidget {
 
 class _CityPageState extends State<CityPage> {
   late List<Activity> activities;
+  Trip my_trip = Trip(city: '', activities: [], date: DateTime.now());
 
   @override
   void didChangeDependencies() {
@@ -40,7 +44,7 @@ class _CityPageState extends State<CityPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text("Choississez une date"),
+                    Text(DateFormatter.dateFormat.format(my_trip.date!)),
                     ElevatedButton(
                       onPressed: () {},
                       child: const Text("Sélectionnez une date"),
