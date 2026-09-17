@@ -16,7 +16,7 @@ class CityPage extends StatefulWidget {
 
 class _CityPageState extends State<CityPage> {
   late List<Activity> activities;
-  Trip my_trip = Trip(city: '', activities: [], date: DateTime.now());
+  Trip my_trip = Trip(city: '', activityIds: [], date: DateTime.now());
 
   @override
   void didChangeDependencies() {
@@ -25,7 +25,33 @@ class _CityPageState extends State<CityPage> {
     activities = activities_mock
         .where((ac) => ac.city.name == city.name)
         .toList();
-    print(activities);
+  }
+
+  Future<void> setDate() async {
+    final DateTime today = DateUtils.dateOnly(DateTime.now());
+    final DateTime lastDate = DateTime(today.year + 2, 12, 31);
+    final DateTime? currentTripDate = my_trip.date;
+    final DateTime? normalizedTripDate = currentTripDate == null
+        ? null
+        : DateUtils.dateOnly(currentTripDate);
+    final DateTime initialDate =
+        normalizedTripDate == null ||
+            normalizedTripDate.isBefore(today) ||
+            normalizedTripDate.isAfter(lastDate)
+        ? today
+        : normalizedTripDate;
+
+    final DateTime? selectedDate = await showDatePicker(
+      context: context,
+      initialDate: initialDate,
+      firstDate: today,
+      lastDate: lastDate,
+    );
+    if (!mounted || selectedDate == null) return;
+
+    setState(() {
+      my_trip.date = selectedDate;
+    });
   }
 
   @override
@@ -46,7 +72,7 @@ class _CityPageState extends State<CityPage> {
                   children: [
                     Text(DateFormatter.dateFormat.format(my_trip.date!)),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: setDate,
                       child: const Text("Sélectionnez une date"),
                     ),
                   ],
