@@ -40,7 +40,7 @@ class ActivityCard extends StatelessWidget {
             const Positioned(
               top: 10,
               right: 10,
-              child: Icon(Icons.check, color: Colors.green, size: 35),
+              child: Icon(Icons.check_circle, color: Colors.green, size: 35),
             ),
         ],
       ),
