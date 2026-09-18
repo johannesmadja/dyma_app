@@ -1,11 +1,12 @@
 import 'package:dyma_app/features/cities/data/models/activities_mock.dart';
 import 'package:dyma_app/features/cities/domain/entities/City.dart';
-import 'package:dyma_app/features/cities/domain/entities/activity.dart';
-import 'package:dyma_app/features/cities/presentation/widgets/activity_card.dart';
 import 'package:dyma_app/features/trip/domain/entities/trip.dart';
+import 'package:dyma_app/features/trip/presentation/widgets/trip_overview.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../core/utils/date_formatter.dart';
+import '../../domain/entities/activity.dart';
+import '../widgets/activity_list.dart';
+import '../widgets/trip_activity_list.dart';
 
 class CityPage extends StatefulWidget {
   const CityPage({super.key});
@@ -16,7 +17,29 @@ class CityPage extends StatefulWidget {
 
 class _CityPageState extends State<CityPage> {
   late List<Activity> activities;
-  Trip my_trip = Trip(city: '', activityIds: [], date: DateTime.now());
+  late Trip my_trip;
+  late int _selectedIndex;
+
+  void _selectedDestination(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  void toggleSelectedActivity(String activityId) {
+    setState(() {
+      my_trip.activityIds.contains(activityId)
+          ? my_trip.activityIds.remove(activityId)
+          : my_trip.activityIds.add(activityId);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    my_trip = Trip(city: '', activityIds: [], date: DateTime.now());
+    _selectedIndex = 0;
+  }
 
   @override
   void didChangeDependencies() {
@@ -62,31 +85,25 @@ class _CityPageState extends State<CityPage> {
       ),
       body: Column(
         children: [
-          Container(
-            height: 200,
-            padding: EdgeInsets.all(10),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(DateFormatter.dateFormat.format(my_trip.date!)),
-                    ElevatedButton(
-                      onPressed: setDate,
-                      child: const Text("Sélectionnez une date"),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
+          TripOverview(trip: my_trip, setDate: setDate),
           Expanded(
-            child: ListView.builder(
-              itemCount: activities.length,
-              itemBuilder: (context, index) =>
-                  ActivityCard(activity: activities[index]),
-            ),
+            child: _selectedIndex == 0
+                ? ActivityList(
+                    activities: activities,
+                    selectedActivities: my_trip.activityIds,
+                    toggleSelectedActivity: toggleSelectedActivity,
+                  )
+                : TripActivityList(activities: activities),
           ),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Colors.blue,
+        currentIndex: _selectedIndex,
+        onTap: _selectedDestination,
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.map), label: 'Découverte'),
+          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Favoris'),
         ],
       ),
     );
