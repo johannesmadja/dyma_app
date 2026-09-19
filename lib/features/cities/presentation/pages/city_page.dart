@@ -20,20 +20,6 @@ class _CityPageState extends State<CityPage> {
   late Trip my_trip;
   late int _selectedIndex;
 
-  void _selectedDestination(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  void toggleSelectedActivity(String activityId) {
-    setState(() {
-      my_trip.activityIds.contains(activityId)
-          ? my_trip.activityIds.remove(activityId)
-          : my_trip.activityIds.add(activityId);
-    });
-  }
-
   @override
   void initState() {
     super.initState();
@@ -48,6 +34,32 @@ class _CityPageState extends State<CityPage> {
     activities = activities_mock
         .where((ac) => ac.city.name == city.name)
         .toList();
+  }
+
+  void _selectedDestination(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  void toggleSelectedActivity(String activityId) {
+    setState(() {
+      my_trip.activityIds.contains(activityId)
+          ? my_trip.activityIds.remove(activityId)
+          : my_trip.activityIds.add(activityId);
+    });
+  }
+
+  void deleteActivity(String activityId) {
+    setState(() {
+      my_trip.activityIds.remove(activityId);
+    });
+  }
+
+  List<Activity> get activitiesForTrip {
+    return activities.where((activity) {
+      return my_trip.activityIds.contains(activity.id);
+    }).toList();
   }
 
   Future<void> setDate() async {
@@ -93,7 +105,10 @@ class _CityPageState extends State<CityPage> {
                     selectedActivities: my_trip.activityIds,
                     toggleSelectedActivity: toggleSelectedActivity,
                   )
-                : TripActivityList(activities: activities),
+                : TripActivityList(
+                    activities: activitiesForTrip,
+                    onDelete: deleteActivity,
+                  ),
           ),
         ],
       ),
