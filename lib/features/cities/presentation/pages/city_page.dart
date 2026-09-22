@@ -1,5 +1,6 @@
 import 'package:dyma_app/features/cities/data/models/activities_mock.dart';
 import 'package:dyma_app/features/cities/domain/entities/City.dart';
+import 'package:dyma_app/features/cities/presentation/widgets/ResponsiveTravelLayout.dart';
 import 'package:dyma_app/features/trip/domain/entities/trip.dart';
 import 'package:dyma_app/features/trip/presentation/widgets/trip_overview.dart';
 import 'package:flutter/material.dart';
@@ -95,23 +96,37 @@ class _CityPageState extends State<CityPage> {
       appBar: AppBar(
         title: Text(activities.isNotEmpty ? activities.first.city.name : ''),
       ),
-      body: Column(
-        children: [
-          TripOverview(trip: my_trip, setDate: setDate),
-          Expanded(
-            child: _selectedIndex == 0
-                ? ActivityList(
-                    activities: activities,
-                    selectedActivities: my_trip.activityIds,
-                    toggleSelectedActivity: toggleSelectedActivity,
-                  )
-                : TripActivityList(
-                    activities: activitiesForTrip,
-                    onDelete: deleteActivity,
-                  ),
-          ),
-        ],
+      body: ResponsiveTravelLayout(
+        summary: TripOverview(trip: my_trip, setDate: setDate),
+        activities: _selectedIndex == 0
+            ? ActivityList(
+                activities: activities,
+                selectedActivities: my_trip.activityIds,
+                toggleSelectedActivity: toggleSelectedActivity,
+              )
+            : TripActivityList(
+                activities: activitiesForTrip,
+                onDelete: deleteActivity,
+              ),
       ),
+
+      // Column(
+      //   children: [
+      //     TripOverview(trip: my_trip, setDate: setDate),
+      //     Expanded(
+      //       child: _selectedIndex == 0
+      //           ? ActivityList(
+      //               activities: activities,
+      //               selectedActivities: my_trip.activityIds,
+      //               toggleSelectedActivity: toggleSelectedActivity,
+      //             )
+      //           : TripActivityList(
+      //               activities: activitiesForTrip,
+      //               onDelete: deleteActivity,
+      //             ),
+      //     ),
+      //   ],
+      // ),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.blue,
         currentIndex: _selectedIndex,
